@@ -36,7 +36,7 @@ Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.55.0
 %define version_enc 1_55_0
-Release: 6%{?dist}
+Release: 7%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -47,38 +47,38 @@ Source0: http://downloads.sourceforge.net/%{name}/%{toplev_dirname}.tar.bz2
 Source1: ver.py
 Source2: libboost_thread.so
 
-# From the version 13 of Fedora, the Boost libraries are delivered
-# with sonames equal to the Boost version (e.g., 1.41.0).
+# Since Fedora 13, the Boost libraries are delivered with sonames
+# equal to the Boost version (e.g., 1.41.0).
 %define sonamever %{version}
 
 # boost is an "umbrella" package that pulls in all other boost
 # components, except for MPI and Python 3 sub-packages.  Those are
 # special in that they are rarely necessary, and it's not a big burden
 # to have interested parties install them explicitly.
-Requires: boost-atomic = %{version}-%{release}
-Requires: boost-chrono = %{version}-%{release}
+Requires: boost-atomic%{?_isa} = %{version}-%{release}
+Requires: boost-chrono%{?_isa} = %{version}-%{release}
 %if %{with context}
-Requires: boost-context = %{version}-%{release}
-Requires: boost-coroutine = %{version}-%{release}
+Requires: boost-context%{?_isa} = %{version}-%{release}
+Requires: boost-coroutine%{?_isa} = %{version}-%{release}
 %endif
-Requires: boost-date-time = %{version}-%{release}
-Requires: boost-filesystem = %{version}-%{release}
-Requires: boost-graph = %{version}-%{release}
-Requires: boost-iostreams = %{version}-%{release}
-Requires: boost-locale = %{version}-%{release}
-Requires: boost-log = %{version}-%{release}
-Requires: boost-math = %{version}-%{release}
-Requires: boost-program-options = %{version}-%{release}
-Requires: boost-python = %{version}-%{release}
-Requires: boost-random = %{version}-%{release}
-Requires: boost-regex = %{version}-%{release}
-Requires: boost-serialization = %{version}-%{release}
-Requires: boost-signals = %{version}-%{release}
-Requires: boost-system = %{version}-%{release}
-Requires: boost-test = %{version}-%{release}
-Requires: boost-thread = %{version}-%{release}
-Requires: boost-timer = %{version}-%{release}
-Requires: boost-wave = %{version}-%{release}
+Requires: boost-date-time%{?_isa} = %{version}-%{release}
+Requires: boost-filesystem%{?_isa} = %{version}-%{release}
+Requires: boost-graph%{?_isa} = %{version}-%{release}
+Requires: boost-iostreams%{?_isa} = %{version}-%{release}
+Requires: boost-locale%{?_isa} = %{version}-%{release}
+Requires: boost-log%{?_isa} = %{version}-%{release}
+Requires: boost-math%{?_isa} = %{version}-%{release}
+Requires: boost-program-options%{?_isa} = %{version}-%{release}
+Requires: boost-python%{?_isa} = %{version}-%{release}
+Requires: boost-random%{?_isa} = %{version}-%{release}
+Requires: boost-regex%{?_isa} = %{version}-%{release}
+Requires: boost-serialization%{?_isa} = %{version}-%{release}
+Requires: boost-signals%{?_isa} = %{version}-%{release}
+Requires: boost-system%{?_isa} = %{version}-%{release}
+Requires: boost-test%{?_isa} = %{version}-%{release}
+Requires: boost-thread%{?_isa} = %{version}-%{release}
+Requires: boost-timer%{?_isa} = %{version}-%{release}
+Requires: boost-wave%{?_isa} = %{version}-%{release}
 
 BuildRequires: m4
 BuildRequires: libstdc++-devel%{?_isa}
@@ -192,7 +192,7 @@ variables.
 %package chrono
 Summary: Run-Time component of boost chrono library
 Group: System Environment/Libraries
-Requires: boost-system = %{version}-%{release}
+Requires: boost-system%{?_isa} = %{version}-%{release}
 
 %description chrono
 
@@ -231,7 +231,7 @@ on generic programming concepts.
 %package filesystem
 Summary: Run-Time component of boost filesystem library
 Group: System Environment/Libraries
-Requires: boost-system = %{version}-%{release}
+Requires: boost-system%{?_isa} = %{version}-%{release}
 
 %description filesystem
 
@@ -242,7 +242,7 @@ directories.
 %package graph
 Summary: Run-Time component of boost graph library
 Group: System Environment/Libraries
-Requires: boost-regex = %{version}-%{release}
+Requires: boost-regex%{?_isa} = %{version}-%{release}
 
 %description graph
 
@@ -262,9 +262,9 @@ stream buffers and i/o filters.
 %package locale
 Summary: Run-Time component of boost locale library
 Group: System Environment/Libraries
-Requires: boost-chrono = %{version}-%{release}
-Requires: boost-system = %{version}-%{release}
-Requires: boost-thread = %{version}-%{release}
+Requires: boost-chrono%{?_isa} = %{version}-%{release}
+Requires: boost-system%{?_isa} = %{version}-%{release}
+Requires: boost-thread%{?_isa} = %{version}-%{release}
 
 %description locale
 
@@ -329,8 +329,8 @@ support for Boost Python Library compiled for Python 3.
 %package python3-devel
 Summary: Shared object symbolic links for Boost.Python 3
 Group: System Environment/Libraries
-Requires: boost-python3 = %{version}-%{release}
-Requires: boost-devel = %{version}-%{release}
+Requires: boost-python3%{?_isa} = %{version}-%{release}
+Requires: boost-devel%{?_isa} = %{version}-%{release}
 
 %description python3-devel
 
@@ -392,7 +392,7 @@ program execution monitoring.
 %package thread
 Summary: Run-Time component of boost thread library
 Group: System Environment/Libraries
-Requires: boost-system = %{version}-%{release}
+Requires: boost-system%{?_isa} = %{version}-%{release}
 
 %description thread
 
@@ -404,8 +404,8 @@ data specific to individual threads.
 %package timer
 Summary: Run-Time component of boost timer library
 Group: System Environment/Libraries
-Requires: boost-chrono = %{version}-%{release}
-Requires: boost-system = %{version}-%{release}
+Requires: boost-chrono%{?_isa} = %{version}-%{release}
+Requires: boost-system%{?_isa} = %{version}-%{release}
 
 %description timer
 
@@ -416,11 +416,11 @@ with as little as one #include and one additional line of code.
 %package wave
 Summary: Run-Time component of boost C99/C++ pre-processing library
 Group: System Environment/Libraries
-Requires: boost-chrono = %{version}-%{release}
-Requires: boost-date-time = %{version}-%{release}
-Requires: boost-filesystem = %{version}-%{release}
-Requires: boost-system = %{version}-%{release}
-Requires: boost-thread = %{version}-%{release}
+Requires: boost-chrono%{?_isa} = %{version}-%{release}
+Requires: boost-date-time%{?_isa} = %{version}-%{release}
+Requires: boost-filesystem%{?_isa} = %{version}-%{release}
+Requires: boost-system%{?_isa} = %{version}-%{release}
+Requires: boost-thread%{?_isa} = %{version}-%{release}
 
 %description wave
 
@@ -431,17 +431,17 @@ pre-processor functionality.
 %package devel
 Summary: The Boost C++ headers and shared development libraries
 Group: Development/Libraries
-Requires: boost = %{version}-%{release}
-Provides: boost-python-devel = %{version}-%{release}
+Requires: boost%{?_isa} = %{version}-%{release}
+Provides: boost-python-devel%{?_isa} = %{version}-%{release}
 Requires: libicu-devel%{?_isa}
 
 # Odeint was shipped in Fedora 18, but later became part of Boost.
 # Note we also obsolete odeint-doc down there.
 # https://bugzilla.redhat.com/show_bug.cgi?id=892850
-Provides: odeint = 2.2-5
-Obsoletes: odeint < 2.2-5
-Provides: odeint-devel = 2.2-5
-Obsoletes: odeint-devel < 2.2-5
+Provides: odeint%{?_isa} = 2.2-5
+Obsoletes: odeint%{?_isa} < 2.2-5
+Provides: odeint-devel%{?_isa} = 2.2-5
+Obsoletes: odeint-devel%{?_isa} < 2.2-5
 
 %description devel
 Headers and shared object symbolic links for the Boost C++ libraries.
@@ -449,9 +449,9 @@ Headers and shared object symbolic links for the Boost C++ libraries.
 %package static
 Summary: The Boost C++ static development libraries
 Group: Development/Libraries
-Requires: boost-devel = %{version}-%{release}
-Obsoletes: boost-devel-static < 1.34.1-14
-Provides: boost-devel-static = %{version}-%{release}
+Requires: boost-devel%{?_isa} = %{version}-%{release}
+Obsoletes: boost-devel-static%{?_isa} < 1.34.1-14
+Provides: boost-devel-static%{?_isa} = %{version}-%{release}
 
 %description static
 Static Boost C++ libraries.
@@ -459,7 +459,7 @@ Static Boost C++ libraries.
 %package doc
 Summary: HTML documentation for the Boost C++ libraries
 Group: Documentation
-%if 0%{?fedora} >= 10 || 0%{?rhel} >= 6
+%if 0%{?rhel} >= 6
 BuildArch: noarch
 %endif
 Provides: boost-python-docs = %{version}-%{release}
@@ -476,7 +476,7 @@ web page (http://www.boost.org/doc/libs/1_40_0).
 %package examples
 Summary: Source examples for the Boost C++ libraries
 Group: Documentation
-%if 0%{?fedora} >= 10 || 0%{?rhel} >= 6
+%if 0%{?rhel} >= 6
 BuildArch: noarch
 %endif
 Requires: boost-devel = %{version}-%{release}
@@ -490,9 +490,9 @@ This package contains example source files distributed with boost.
 %package openmpi
 Summary: Run-Time component of Boost.MPI library
 Group: System Environment/Libraries
-Requires: openmpi
+Requires: openmpi%{?_isa}
 BuildRequires: openmpi-devel
-Requires: boost-serialization = %{version}-%{release}
+Requires: boost-serialization%{?_isa} = %{version}-%{release}
 
 %description openmpi
 
@@ -502,10 +502,10 @@ API over the OpenMPI implementation of MPI.
 %package openmpi-devel
 Summary: Shared library symbolic links for Boost.MPI
 Group: System Environment/Libraries
-Requires: boost-devel = %{version}-%{release}
-Requires: boost-openmpi = %{version}-%{release}
-Requires: boost-openmpi-python = %{version}-%{release}
-Requires: boost-graph-openmpi = %{version}-%{release}
+Requires: boost-devel%{?_isa} = %{version}-%{release}
+Requires: boost-openmpi%{?_isa} = %{version}-%{release}
+Requires: boost-openmpi-python%{?_isa} = %{version}-%{release}
+Requires: boost-graph-openmpi%{?_isa} = %{version}-%{release}
 
 %description openmpi-devel
 
@@ -515,9 +515,9 @@ API over the OpenMPI implementation of MPI.
 %package openmpi-python
 Summary: Python run-time component of Boost.MPI library
 Group: System Environment/Libraries
-Requires: boost-openmpi = %{version}-%{release}
-Requires: boost-python = %{version}-%{release}
-Requires: boost-serialization = %{version}-%{release}
+Requires: boost-openmpi%{?_isa} = %{version}-%{release}
+Requires: boost-python%{?_isa} = %{version}-%{release}
+Requires: boost-serialization%{?_isa} = %{version}-%{release}
 
 %description openmpi-python
 
@@ -527,8 +527,8 @@ API over the OpenMPI implementation of MPI.
 %package graph-openmpi
 Summary: Run-Time component of parallel boost graph library
 Group: System Environment/Libraries
-Requires: boost-openmpi = %{version}-%{release}
-Requires: boost-serialization = %{version}-%{release}
+Requires: boost-openmpi%{?_isa} = %{version}-%{release}
+Requires: boost-serialization%{?_isa} = %{version}-%{release}
 
 %description graph-openmpi
 
@@ -545,11 +545,11 @@ back-end to do the parallel work.
 %package mpich
 Summary: Run-Time component of Boost.MPI library
 Group: System Environment/Libraries
-Requires: mpich
+Requires: mpich%{?_isa}
 BuildRequires: mpich-devel
-Requires: boost-serialization = %{version}-%{release}
-Provides: %{name}-mpich2 = %{version}-%{release}
-Obsoletes: %{name}-mpich2 < 1.53.0-9
+Requires: boost-serialization%{?_isa} = %{version}-%{release}
+Provides: boost-mpich2%{?_isa} = %{version}-%{release}
+Obsoletes: boost-mpich2%{?_isa} < 1.53.0-9
 
 %description mpich
 
@@ -559,12 +559,12 @@ API over the MPICH implementation of MPI.
 %package mpich-devel
 Summary: Shared library symbolic links for Boost.MPI
 Group: System Environment/Libraries
-Requires: boost-devel = %{version}-%{release}
-Requires: boost-mpich = %{version}-%{release}
-Requires: boost-mpich-python = %{version}-%{release}
-Requires: boost-graph-mpich = %{version}-%{release}
-Provides: %{name}-mpich2-devel = %{version}-%{release}
-Obsoletes: %{name}-mpich2-devel < 1.53.0-9
+Requires: boost-devel%{?_isa} = %{version}-%{release}
+Requires: boost-mpich%{?_isa} = %{version}-%{release}
+Requires: boost-mpich-python%{?_isa} = %{version}-%{release}
+Requires: boost-graph-mpich%{?_isa} = %{version}-%{release}
+Provides: boost-mpich2-devel%{?_isa} = %{version}-%{release}
+Obsoletes: boost-mpich2-devel%{?_isa} < 1.53.0-9
 
 %description mpich-devel
 
@@ -574,11 +574,11 @@ API over the MPICH implementation of MPI.
 %package mpich-python
 Summary: Python run-time component of Boost.MPI library
 Group: System Environment/Libraries
-Requires: boost-mpich = %{version}-%{release}
-Requires: boost-python = %{version}-%{release}
-Requires: boost-serialization = %{version}-%{release}
-Provides: %{name}-mpich2-python = %{version}-%{release}
-Obsoletes: %{name}-mpich2-python < 1.53.0-9
+Requires: boost-mpich%{?_isa} = %{version}-%{release}
+Requires: boost-python%{?_isa} = %{version}-%{release}
+Requires: boost-serialization%{?_isa} = %{version}-%{release}
+Provides: boost-mpich2-python%{?_isa} = %{version}-%{release}
+Obsoletes: boost-mpich2-python%{?_isa} < 1.53.0-9
 
 %description mpich-python
 
@@ -588,10 +588,10 @@ API over the MPICH implementation of MPI.
 %package graph-mpich
 Summary: Run-Time component of parallel boost graph library
 Group: System Environment/Libraries
-Requires: boost-mpich = %{version}-%{release}
-Requires: boost-serialization = %{version}-%{release}
-Provides: %{name}-graph-mpich2 = %{version}-%{release}
-Obsoletes: %{name}-graph-mpich2 < 1.53.0-9
+Requires: boost-mpich%{?_isa} = %{version}-%{release}
+Requires: boost-serialization%{?_isa} = %{version}-%{release}
+Provides: boost-graph-mpich2%{?_isa} = %{version}-%{release}
+Obsoletes: boost-graph-mpich2%{?_isa} < 1.53.0-9
 
 %description graph-mpich
 
@@ -1256,6 +1256,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Thu Jan  8 2015 Petr Machata <pmachata@redhat.com> - 1.55.0-7
+- Change Requires: and other package references to use %%{?_isa}, so
+  that dependencies are arch-aware.
+- Drop two obsolete conditions testing Fedora >= 10 (but leave RHEL >=
+  6 for potential EPEL deployment).
+
 * Fri Jan  2 2015 Petr Machata <pmachata@redhat.com> - 1.55.0-6
 - Boost.Atomic: Fixed incorrect initialization of 128-bit values, when
   no native support for 128-bit integers is available.
