@@ -1,5 +1,5 @@
---- boost_1_55_0/tools/build/v2/tools/python.jam	2013-05-21 06:14:18.000000000 +0200
-+++ boost_1_55_0/tools/build/v2/tools/python.jam	2014-05-29 19:09:12.115413877 +0200
+--- boost_1_57_0/tools/build/src/tools/python.jam	2013-05-21 06:14:18.000000000 +0200
++++ boost_1_55_0/tools/build/src/tools/python.jam	2014-05-29 19:09:12.115413877 +0200
 @@ -94,7 +94,7 @@ feature.feature pythonpath : : free opti
  #   using python : 2.3 : /usr/local/bin/python ;
  #

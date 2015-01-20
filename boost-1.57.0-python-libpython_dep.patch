@@ -1,7 +1,7 @@
-Index: boost/tools/build/v2/tools/python.jam
+Index: boost_1_57_0/tools/build/src/tools/python.jam
 ===================================================================
---- boost/tools/build/v2/tools/python.jam	(revision 50406)
-+++ boost/tools/build/v2/tools/python.jam	(working copy)
+--- boost_1_57_0/tools/build/src/tools/python.jam	(revision 50406)
++++ boost_1_57_0/tools/build/src/tools/python.jam	(working copy)
 @@ -994,7 +994,7 @@
      else
      {

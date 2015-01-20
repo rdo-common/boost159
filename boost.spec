@@ -34,9 +34,9 @@
 
 Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
-Version: 1.55.0
-%define version_enc 1_55_0
-Release: 8%{?dist}
+Version: 1.57.0
+%define version_enc 1_57_0
+Release: 1%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -102,72 +102,27 @@ Patch5: boost-1.48.0-add-bjam-man-page.patch
 # https://svn.boost.org/trac/boost/ticket/6701
 Patch15: boost-1.50.0-pool.patch
 
-# https://svn.boost.org/trac/boost/ticket/8844
-Patch23: boost-1.54.0-bind-static_assert.patch
-
-# https://svn.boost.org/trac/boost/ticket/8847
-Patch24: boost-1.54.0-concept-unused_typedef.patch
-
 # https://svn.boost.org/trac/boost/ticket/5637
-Patch25: boost-1.54.0-mpl-print.patch
-
-# https://svn.boost.org/trac/boost/ticket/8859
-Patch26: boost-1.54.0-static_warning-unused_typedef.patch
-
-# https://svn.boost.org/trac/boost/ticket/8853
-Patch31: boost-1.54.0-tuple-unused_typedef.patch
-
-# https://svn.boost.org/trac/boost/ticket/8854
-Patch32: boost-1.54.0-random-unused_typedef.patch
-
-# https://svn.boost.org/trac/boost/ticket/8856
-Patch33: boost-1.54.0-date_time-unused_typedef.patch
-Patch34: boost-1.54.0-date_time-unused_typedef-2.patch
+Patch25: boost-1.57.0-mpl-print.patch
 
 # https://svn.boost.org/trac/boost/ticket/8870
-Patch35: boost-1.54.0-spirit-unused_typedef.patch
-Patch36: boost-1.54.0-spirit-unused_typedef-2.patch
-
-# https://svn.boost.org/trac/boost/ticket/8871
-Patch37: boost-1.54.0-numeric-unused_typedef.patch
+Patch36: boost-1.57.0-spirit-unused_typedef.patch
 
 # https://svn.boost.org/trac/boost/ticket/8878
 Patch45: boost-1.54.0-locale-unused_typedef.patch
-
-# https://svn.boost.org/trac/boost/ticket/8879
-Patch46: boost-1.54.0-property_tree-unused_typedef.patch
 
 # https://svn.boost.org/trac/boost/ticket/8888
 Patch49: boost-1.54.0-python-unused_typedef.patch
 
 # https://svn.boost.org/trac/boost/ticket/9038
-Patch51: boost-1.54.0-pool-test_linking.patch
+Patch51: boost-1.57.0-pool-test_linking.patch
 
 # This was already fixed upstream, so no tracking bug.
 Patch53: boost-1.54.0-pool-max_chunks_shadow.patch
 
-# https://svn.boost.org/trac/boost/ticket/8725
-Patch54: boost-1.55.0-program_options-class_attribute.patch
-
-# Fixed upstream on Oct 4 00:26:49 2013.
-Patch55: boost-1.55.0-archive-init_order.patch
-
-# https://github.com/boostorg/xpressive/pull/1
-Patch56: boost-1.55.0-xpressive-unused_typedefs.patch
-
-# Fixed upstream on Aug 20 05:11:14 2013.
-Patch57: boost-1.55.0-spirit-unused_typedefs.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1159960
-Patch58: boost-1.54.0-smart_ptr-shared_ptr_at.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1177066
-Patch59: boost-1.55.0-atomic-int128_1.patch
-Patch60: boost-1.55.0-atomic-int128_2.patch
-
 # https://bugzilla.redhat.com/show_bug.cgi?id=1102667
-Patch61: boost-1.55.0-python-libpython_dep.patch
-Patch62: boost-1.55.0-python-abi_letters.patch
+Patch61: boost-1.57.0-python-libpython_dep.patch
+Patch62: boost-1.57.0-python-abi_letters.patch
 Patch63: boost-1.55.0-python-test-PyImport_AppendInittab.patch
 
 %bcond_with tests
@@ -202,6 +157,17 @@ Requires: boost-system%{?_isa} = %{version}-%{release}
 %description chrono
 
 Run-Time support for Boost.Chrono, a set of useful time utilities.
+
+%package container
+Summary: Run-Time component of boost container library
+Group: System Environment/Libraries
+
+%description container
+
+Boost.Container library implements several well-known containers,
+including STL containers. The aim of the library is to offers advanced
+features not present in standard containers or to offer the latest
+standard draft features for compilers that comply with C++03.
 
 %if %{with context}
 %package context
@@ -636,29 +602,12 @@ a number of significant features and is now developed independently
 %patch4 -p1
 %patch5 -p1
 %patch15 -p0
-%patch23 -p1
-%patch24 -p1
-%patch25 -p0
-%patch26 -p1
-%patch31 -p0
-%patch32 -p0
-%patch33 -p0
-%patch34 -p1
-%patch35 -p1
+%patch25 -p1
 %patch36 -p1
-%patch37 -p1
 %patch45 -p1
-%patch46 -p1
 %patch49 -p1
 %patch51 -p1
 %patch53 -p1
-%patch54 -p1
-%patch55 -p1
-%patch56 -p1
-%patch57 -p1
-%patch58 -p1
-%patch59 -p2
-%patch60 -p2
 %patch61 -p1
 %patch62 -p1
 %patch63 -p1
@@ -678,7 +627,7 @@ a number of significant features and is now developed independently
 : PYTHON3_ABIFLAGS=%{python3_abiflags}
 %endif
 
-cat >> ./tools/build/v2/user-config.jam << EOF
+cat > ./tools/build/src/user-config.jam << EOF
 # There are many strict aliasing warnings, and it's not feasible to go
 # through them all at this time.
 using gcc : : : <compileflags>-fno-strict-aliasing ;
@@ -762,7 +711,7 @@ export PATH=/bin${PATH:+:}$PATH
 %endif
 
 echo ============================= build Boost.Build ==================
-(cd tools/build/v2
+(cd tools/build
  ./bootstrap.sh --with-toolset=gcc)
 
 %check
@@ -831,19 +780,19 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libboost_thread.so
 install -p -m 644 $(basename %{SOURCE2}) $RPM_BUILD_ROOT%{_libdir}/
 
 echo ============================= install Boost.Build ==================
-(cd tools/build/v2
+(cd tools/build
  ./b2 --prefix=$RPM_BUILD_ROOT%{_prefix} install
  # Fix some permissions
- chmod -x $RPM_BUILD_ROOT%{_datadir}/boost-build/build/alias.py
- chmod +x $RPM_BUILD_ROOT%{_datadir}/boost-build/tools/doxproc.py
+ chmod -x $RPM_BUILD_ROOT%{_datadir}/boost-build/src/build/alias.py
+ chmod +x $RPM_BUILD_ROOT%{_datadir}/boost-build/src/tools/doxproc.py
  # We don't want to distribute this
  rm -f $RPM_BUILD_ROOT%{_bindir}/b2
  # Not a real file
- rm -f $RPM_BUILD_ROOT%{_datadir}/boost-build/build/project.ann.py
+ rm -f $RPM_BUILD_ROOT%{_datadir}/boost-build/src/build/project.ann.py
  # Empty file
- rm -f $RPM_BUILD_ROOT%{_datadir}/boost-build/tools/doxygen/windows-paths-check.hpp
+ rm -f $RPM_BUILD_ROOT%{_datadir}/boost-build/src/tools/doxygen/windows-paths-check.hpp
  # Install the manual page
- %{__install} -p -m 644 doc/bjam.1 -D $RPM_BUILD_ROOT%{_mandir}/man1/bjam.1
+ %{__install} -p -m 644 v2/doc/bjam.1 -D $RPM_BUILD_ROOT%{_mandir}/man1/bjam.1
 )
 
 # Install documentation files (HTML pages) within the temporary place
@@ -923,6 +872,10 @@ rm -rf $RPM_BUILD_ROOT
 %post chrono -p /sbin/ldconfig
 
 %postun chrono -p /sbin/ldconfig
+
+%post container -p /sbin/ldconfig
+
+%postun container -p /sbin/ldconfig
 
 %if %{with context}
 %post context -p /sbin/ldconfig
@@ -1021,6 +974,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-, root, root, -)
 %doc LICENSE_1_0.txt
 %{_libdir}/libboost_chrono.so.%{sonamever}
+
+%files container
+%defattr(-, root, root, -)
+%doc LICENSE_1_0.txt
+%{_libdir}/libboost_container.so.%{sonamever}
 
 %if %{with context}
 
@@ -1160,6 +1118,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/%{name}
 %{_libdir}/libboost_atomic.so
 %{_libdir}/libboost_chrono.so
+%{_libdir}/libboost_container.so
 %if %{with context}
 %{_libdir}/libboost_context.so
 %{_libdir}/libboost_coroutine.so
@@ -1266,6 +1225,34 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Tue Jan 20 2015 Petr Machata <pmachata@redhat.com> - 1.57.0-1
+- Rebase to 1.57.0
+  - Drop patches:
+    boost-1.54.0-bind-static_assert.patch
+    boost-1.54.0-concept-unused_typedef.patch
+    boost-1.54.0-static_warning-unused_typedef.patch
+    boost-1.54.0-tuple-unused_typedef.patch
+    boost-1.54.0-random-unused_typedef.patch
+    boost-1.54.0-date_time-unused_typedef.patch
+    boost-1.54.0-date_time-unused_typedef-2.patch
+    boost-1.54.0-spirit-unused_typedef.patch
+    boost-1.54.0-numeric-unused_typedef.patch
+    boost-1.54.0-property_tree-unused_typedef.patch
+    boost-1.55.0-program_options-class_attribute.patch
+    boost-1.55.0-archive-init_order.patch
+    boost-1.55.0-xpressive-unused_typedefs.patch
+    boost-1.55.0-spirit-unused_typedefs.patch
+    boost-1.54.0-smart_ptr-shared_ptr_at.patch
+    boost-1.55.0-atomic-int128_1.patch
+    boost-1.55.0-atomic-int128_2.patch
+
+  - Rebase patches:
+    boost-1.54.0-mpl-print.patch -> boost-1.57.0-mpl-print.patch
+    boost-1.54.0-spirit-unused_typedef-2.patch -> boost-1.57.0-spirit-unused_typedef.patch
+    boost-1.54.0-pool-test_linking.patch -> boost-1.57.0-pool-test_linking.patch
+
+  - Add new subpackages boost-container
+
 * Fri Jan  9 2015 Petr Machata <pmachata@redhat.com> - 1.55.0-8
 - Build libboost_python and libboost_python3 such that they depend on
   their respective libpython's.
