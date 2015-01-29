@@ -20,11 +20,7 @@
   %bcond_without openmpi
 %endif
 
-%ifnarch %{ix86} x86_64 %{arm}
-  # Avoid using Boost.Context on non-x86 arches.  s390 is not
-  # supported at all and there were _syntax errors_ in PPC code.  This
-  # should be enabled on a case-by-case basis as the arches are tested
-  # and fixed.
+%ifnarch %{ix86} x86_64 %{arm} ppc64 ppc64le
   %bcond_with context
 %else
   %bcond_without context
