@@ -399,16 +399,16 @@ pre-processor functionality.
 Summary: The Boost C++ headers and shared development libraries
 Group: Development/Libraries
 Requires: boost%{?_isa} = %{version}-%{release}
-Provides: boost-python-devel%{?_isa} = %{version}-%{release}
+Provides: boost-python-devel
 Requires: libicu-devel%{?_isa}
 
 # Odeint was shipped in Fedora 18, but later became part of Boost.
 # Note we also obsolete odeint-doc down there.
 # https://bugzilla.redhat.com/show_bug.cgi?id=892850
-Provides: odeint%{?_isa} = 2.2-5
-Obsoletes: odeint%{?_isa} < 2.2-5
-Provides: odeint-devel%{?_isa} = 2.2-5
-Obsoletes: odeint-devel%{?_isa} < 2.2-5
+Provides: odeint = 2.2-5
+Obsoletes: odeint < 2.2-5
+Provides: odeint-devel = 2.2-5
+Obsoletes: odeint-devel < 2.2-5
 
 %description devel
 Headers and shared object symbolic links for the Boost C++ libraries.
@@ -417,8 +417,8 @@ Headers and shared object symbolic links for the Boost C++ libraries.
 Summary: The Boost C++ static development libraries
 Group: Development/Libraries
 Requires: boost-devel%{?_isa} = %{version}-%{release}
-Obsoletes: boost-devel-static%{?_isa} < 1.34.1-14
-Provides: boost-devel-static%{?_isa} = %{version}-%{release}
+Obsoletes: boost-devel-static < 1.34.1-14
+Provides: boost-devel-static = %{version}-%{release}
 
 %description static
 Static Boost C++ libraries.
@@ -515,8 +515,8 @@ Group: System Environment/Libraries
 Requires: mpich%{?_isa}
 BuildRequires: mpich-devel
 Requires: boost-serialization%{?_isa} = %{version}-%{release}
-Provides: boost-mpich2%{?_isa} = %{version}-%{release}
-Obsoletes: boost-mpich2%{?_isa} < 1.53.0-9
+Provides: boost-mpich2 = %{version}-%{release}
+Obsoletes: boost-mpich2 < 1.53.0-9
 
 %description mpich
 
@@ -530,8 +530,8 @@ Requires: boost-devel%{?_isa} = %{version}-%{release}
 Requires: boost-mpich%{?_isa} = %{version}-%{release}
 Requires: boost-mpich-python%{?_isa} = %{version}-%{release}
 Requires: boost-graph-mpich%{?_isa} = %{version}-%{release}
-Provides: boost-mpich2-devel%{?_isa} = %{version}-%{release}
-Obsoletes: boost-mpich2-devel%{?_isa} < 1.53.0-9
+Provides: boost-mpich2-devel = %{version}-%{release}
+Obsoletes: boost-mpich2-devel < 1.53.0-9
 
 %description mpich-devel
 
@@ -544,8 +544,8 @@ Group: System Environment/Libraries
 Requires: boost-mpich%{?_isa} = %{version}-%{release}
 Requires: boost-python%{?_isa} = %{version}-%{release}
 Requires: boost-serialization%{?_isa} = %{version}-%{release}
-Provides: boost-mpich2-python%{?_isa} = %{version}-%{release}
-Obsoletes: boost-mpich2-python%{?_isa} < 1.53.0-9
+Provides: boost-mpich2-python = %{version}-%{release}
+Obsoletes: boost-mpich2-python < 1.53.0-9
 
 %description mpich-python
 
@@ -557,8 +557,8 @@ Summary: Run-Time component of parallel boost graph library
 Group: System Environment/Libraries
 Requires: boost-mpich%{?_isa} = %{version}-%{release}
 Requires: boost-serialization%{?_isa} = %{version}-%{release}
-Provides: boost-graph-mpich2%{?_isa} = %{version}-%{release}
-Obsoletes: boost-graph-mpich2%{?_isa} < 1.53.0-9
+Provides: boost-graph-mpich2 = %{version}-%{release}
+Obsoletes: boost-graph-mpich2 < 1.53.0-9
 
 %description graph-mpich
 
