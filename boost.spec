@@ -32,7 +32,7 @@ Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.57.0
 %define version_enc 1_57_0
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -120,6 +120,10 @@ Patch53: boost-1.54.0-pool-max_chunks_shadow.patch
 Patch61: boost-1.57.0-python-libpython_dep.patch
 Patch62: boost-1.57.0-python-abi_letters.patch
 Patch63: boost-1.55.0-python-test-PyImport_AppendInittab.patch
+
+# https://svn.boost.org/trac/boost/ticket/10100
+# https://github.com/boostorg/signals2/pull/8
+Patch64: boost-1.57.0-signals2-weak_ptr.patch
 
 %bcond_with tests
 %bcond_with docs_generated
@@ -607,6 +611,7 @@ a number of significant features and is now developed independently
 %patch61 -p1
 %patch62 -p1
 %patch63 -p1
+%patch64 -p2
 
 # At least python2_version needs to be a macro so that it's visible in
 # %%install as well.
@@ -1221,6 +1226,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Thu Jan 29 2015 Petr Machata <pmachata@redhat.com> - 1.57.0-2
+- Change Provides: and Obosoletes: back to not use %%{?_isa}
+- Enable Boost.Context on PowerPC, it should now be supported
+- Add a patch for Boost.Signal2 to include weak_ptr where it uses it
+  (boost-1.57.0-signals2-weak_ptr.patch)
+
 * Tue Jan 20 2015 Petr Machata <pmachata@redhat.com> - 1.57.0-1
 - Rebase to 1.57.0
   - Drop patches:
