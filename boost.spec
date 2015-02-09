@@ -32,7 +32,7 @@ Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.57.0
 %define version_enc 1_57_0
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -124,6 +124,12 @@ Patch63: boost-1.55.0-python-test-PyImport_AppendInittab.patch
 # https://svn.boost.org/trac/boost/ticket/10100
 # https://github.com/boostorg/signals2/pull/8
 Patch64: boost-1.57.0-signals2-weak_ptr.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1190039
+Patch65: boost-1.57.0-build-optflags.patch
+
+# https://svn.boost.org/trac/boost/ticket/10510
+Patch66: boost-1.57.0-uuid-comparison.patch
 
 %bcond_with tests
 %bcond_with docs_generated
@@ -612,6 +618,8 @@ a number of significant features and is now developed independently
 %patch62 -p1
 %patch63 -p1
 %patch64 -p2
+%patch65 -p1
+%patch66 -p2
 
 # At least python2_version needs to be a macro so that it's visible in
 # %%install as well.
@@ -628,10 +636,15 @@ a number of significant features and is now developed independently
 : PYTHON3_ABIFLAGS=%{python3_abiflags}
 %endif
 
-cat > ./tools/build/src/user-config.jam << EOF
 # There are many strict aliasing warnings, and it's not feasible to go
 # through them all at this time.
-using gcc : : : <compileflags>-fno-strict-aliasing ;
+export RPM_OPT_FLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
+
+cat > ./tools/build/src/user-config.jam << "EOF"
+import os ;
+local RPM_OPT_FLAGS = [ os.environ RPM_OPT_FLAGS ] ;
+
+using gcc : : : <compileflags>$(RPM_OPT_FLAGS) ;
 %if %{with openmpi} || %{with mpich}
 using mpi ;
 %endif
@@ -1226,6 +1239,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Mon Feb  9 2015 Petr Machata <pmachata@redhat.com> - 1.57.0-3
+- Honor RPM_OPT_FLAGS (boost-1.57.0-build-optflags.patch)
+  - And don't pass -ftemplate-depth at all.  The intention there was
+    to increase the default instantiation depth above the default 17,
+    but GCC defaults to 900 anyway, and requesting 128 actually lowers
+    the limit.  (The same patch.)
+
+- Add a patch to fix incorrect operator< in Boost.UUID
+  (boost-1.57.0-uuid-comparison.patch)
+
 * Thu Jan 29 2015 Petr Machata <pmachata@redhat.com> - 1.57.0-2
 - Change Provides: and Obosoletes: back to not use %%{?_isa}
 - Enable Boost.Context on PowerPC, it should now be supported
