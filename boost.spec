@@ -32,7 +32,7 @@ Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.57.0
 %define version_enc 1_57_0
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -130,6 +130,10 @@ Patch65: boost-1.57.0-build-optflags.patch
 
 # https://svn.boost.org/trac/boost/ticket/10510
 Patch66: boost-1.57.0-uuid-comparison.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1192002
+# https://svn.boost.org/trac/boost/ticket/11044
+Patch67: boost-1.57.0-move-is_class.patch
 
 %bcond_with tests
 %bcond_with docs_generated
@@ -620,6 +624,7 @@ a number of significant features and is now developed independently
 %patch64 -p2
 %patch65 -p1
 %patch66 -p2
+%patch67 -p0
 
 # At least python2_version needs to be a macro so that it's visible in
 # %%install as well.
@@ -1239,6 +1244,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Wed Feb 18 2015 Petr Machata <pmachata@redhat.com> - 1.57.0-4
+- Fix template <class T> class boost::rv, which for union T's inherits
+  off them.  (boost-1.57.0-move-is_class.patch)
+
 * Mon Feb  9 2015 Petr Machata <pmachata@redhat.com> - 1.57.0-3
 - Honor RPM_OPT_FLAGS (boost-1.57.0-build-optflags.patch)
   - And don't pass -ftemplate-depth at all.  The intention there was
