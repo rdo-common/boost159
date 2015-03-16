@@ -32,7 +32,7 @@ Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.57.0
 %define version_enc 1_57_0
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -1244,6 +1244,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Mon Mar 16 2015 Than Ngo <than@redhat.com> 1.57.0-5
+- rebuild against new gcc
+
 * Wed Feb 18 2015 Petr Machata <pmachata@redhat.com> - 1.57.0-4
 - Fix template <class T> class boost::rv, which for union T's inherits
   off them.  (boost-1.57.0-move-is_class.patch)
