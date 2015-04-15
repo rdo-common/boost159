@@ -1,0 +1,40 @@
+From de60227a90989e502f5a0ade0c2a5d6bf7af82b8 Mon Sep 17 00:00:00 2001
+From: Oliver Kowalke <oliver.kowalke@gmx.de>
+Date: Tue, 30 Dec 2014 21:08:50 +0100
+Subject: [PATCH 16/54] remove untested.cpp for ARM64/MACH-O
+
+---
+ build/Jamfile.v2 | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/libs/context/build/Jamfile.v2 b/libs/context/build/Jamfile.v2
+index c2d34cb..c7f2af2 100644
+--- a/libs/context/build/Jamfile.v2
++++ b/libs/context/build/Jamfile.v2
+@@ -227,7 +227,6 @@ alias asm_context_sources
+ alias asm_context_sources
+    : [ make asm/make_arm64_aapcs_macho_gas.o : asm/make_arm64_aapcs_macho_gas.S : @gas64 ]
+      [ make asm/jump_arm64_aapcs_macho_gas.o : asm/jump_arm64_aapcs_macho_gas.S : @gas64 ]
+-     untested.cpp
+    : <abi>aapcs
+      <address-model>64
+      <architecture>arm
+@@ -237,7 +236,6 @@ alias asm_context_sources
+ alias asm_context_sources
+    : asm/make_arm64_aapcs_macho_gas.S
+      asm/jump_arm64_aapcs_macho_gas.S
+-     untested.cpp
+    : <abi>aapcs
+      <address-model>64
+      <architecture>arm
+@@ -248,7 +246,6 @@ alias asm_context_sources
+ alias asm_context_sources
+    : asm/make_arm64_aapcs_macho_gas.S
+      asm/jump_arm64_aapcs_macho_gas.S
+-     untested.cpp
+    : <abi>aapcs
+      <address-model>64
+      <architecture>arm
+-- 
+2.3.5
+

@@ -20,7 +20,7 @@
   %bcond_without openmpi
 %endif
 
-%ifnarch %{ix86} x86_64 %{arm} ppc64 ppc64le
+%ifnarch %{ix86} x86_64 %{arm} ppc64 ppc64le aarch64
   %bcond_with context
 %else
   %bcond_without context
@@ -32,7 +32,7 @@ Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.57.0
 %define version_enc 1_57_0
-Release: 6%{?dist}
+Release: 7%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -134,6 +134,16 @@ Patch66: boost-1.57.0-uuid-comparison.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1192002
 # https://svn.boost.org/trac/boost/ticket/11044
 Patch67: boost-1.57.0-move-is_class.patch
+
+Patch70: boost-context-0001-add-support-for-ARM64-MACH-O.patch
+Patch71: boost-context-0002-make-ARM64-unsupported.patch
+Patch72: boost-context-0015-jump-and-make-stubs-for-arm64-aarch64-for-iOS-ABI.patch
+Patch73: boost-context-0016-remove-untested.cpp-for-ARM64-MACH-O.patch
+Patch74: boost-context-0046-add-support-for-ARM64-ELF.patch
+Patch75: boost-context-0047-some-fixes-for-ARM64.patch
+Patch76: boost-context-0048-do-not-use-aliases-LR-and-FP-for-ARM64-gcc.patch
+Patch77: boost-context-partial-revert-of-0002.patch
+Patch78: boost-context-use-sysv-not-aapcs.patch
 
 %bcond_with tests
 %bcond_with docs_generated
@@ -625,6 +635,15 @@ a number of significant features and is now developed independently
 %patch65 -p1
 %patch66 -p2
 %patch67 -p0
+%patch70 -p1
+%patch71 -p1
+%patch72 -p1
+%patch73 -p1
+%patch74 -p1
+%patch75 -p1
+%patch76 -p1
+%patch77 -p1
+%patch78 -p1
 
 # At least python2_version needs to be a macro so that it's visible in
 # %%install as well.
@@ -1244,6 +1263,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Mon Apr 13 2015 Marcin Juszkiewicz <mjuszkiewicz@redhat.com> - 1.57.0-7
+- Add AArch64 support for boost::context
+  - Numbered patches are cherry-picked from upstream repository.
+  - partial-revert-of-0002 removes some build definitions which are defined
+    in coroutine/
+  - last patch changes ABI names - taken from boost ML
+
 * Sun Apr 12 2015 David Tardon <dtardon@redhat.com> - 1.57.0-6
 - rebuild for yet another C++ ABI break
 
