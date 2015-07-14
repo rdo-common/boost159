@@ -30,9 +30,9 @@
 
 Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
-Version: 1.57.0
-%define version_enc 1_57_0
-Release: 8%{?dist}
+Version: 1.58.0
+%define version_enc 1_58_0
+Release: 1%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -96,7 +96,7 @@ Patch5: boost-1.48.0-add-bjam-man-page.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=828856
 # https://bugzilla.redhat.com/show_bug.cgi?id=828857
 # https://svn.boost.org/trac/boost/ticket/6701
-Patch15: boost-1.50.0-pool.patch
+Patch15: boost-1.58.0-pool.patch
 
 # https://svn.boost.org/trac/boost/ticket/5637
 Patch25: boost-1.57.0-mpl-print.patch
@@ -111,19 +111,12 @@ Patch45: boost-1.54.0-locale-unused_typedef.patch
 Patch49: boost-1.54.0-python-unused_typedef.patch
 
 # https://svn.boost.org/trac/boost/ticket/9038
-Patch51: boost-1.57.0-pool-test_linking.patch
-
-# This was already fixed upstream, so no tracking bug.
-Patch53: boost-1.54.0-pool-max_chunks_shadow.patch
+Patch51: boost-1.58.0-pool-test_linking.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1102667
 Patch61: boost-1.57.0-python-libpython_dep.patch
 Patch62: boost-1.57.0-python-abi_letters.patch
 Patch63: boost-1.55.0-python-test-PyImport_AppendInittab.patch
-
-# https://svn.boost.org/trac/boost/ticket/10100
-# https://github.com/boostorg/signals2/pull/8
-Patch64: boost-1.57.0-signals2-weak_ptr.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1190039
 Patch65: boost-1.57.0-build-optflags.patch
@@ -131,18 +124,6 @@ Patch65: boost-1.57.0-build-optflags.patch
 # https://svn.boost.org/trac/boost/ticket/10510
 Patch66: boost-1.57.0-uuid-comparison.patch
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=1192002
-# https://svn.boost.org/trac/boost/ticket/11044
-Patch67: boost-1.57.0-move-is_class.patch
-
-Patch70: boost-context-0001-add-support-for-ARM64-MACH-O.patch
-Patch71: boost-context-0002-make-ARM64-unsupported.patch
-Patch72: boost-context-0015-jump-and-make-stubs-for-arm64-aarch64-for-iOS-ABI.patch
-Patch73: boost-context-0016-remove-untested.cpp-for-ARM64-MACH-O.patch
-Patch74: boost-context-0046-add-support-for-ARM64-ELF.patch
-Patch75: boost-context-0047-some-fixes-for-ARM64.patch
-Patch76: boost-context-0048-do-not-use-aliases-LR-and-FP-for-ARM64-gcc.patch
-Patch77: boost-context-partial-revert-of-0002.patch
 Patch78: boost-context-use-sysv-not-aapcs.patch
 
 %bcond_with tests
@@ -627,22 +608,11 @@ a number of significant features and is now developed independently
 %patch45 -p1
 %patch49 -p1
 %patch51 -p1
-%patch53 -p1
 %patch61 -p1
 %patch62 -p1
 %patch63 -p1
-%patch64 -p2
 %patch65 -p1
 %patch66 -p2
-%patch67 -p0
-%patch70 -p1
-%patch71 -p1
-%patch72 -p1
-%patch73 -p1
-%patch74 -p1
-%patch75 -p1
-%patch76 -p1
-%patch77 -p1
 %patch78 -p1
 
 # At least python2_version needs to be a macro so that it's visible in
@@ -1263,6 +1233,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Fri Jul 17 2015 Jonathan Wakely <jwakely@redhat.com> - 1.58.0-1
+- Rebase to 1.58.0
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.57.0-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
