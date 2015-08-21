@@ -30,9 +30,9 @@
 
 Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
-Version: 1.58.0
-%define version_enc 1_58_0
-Release: 9%{?dist}
+Version: 1.59.0
+%define version_enc 1_59_0
+Release: 1%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -107,9 +107,6 @@ Patch36: boost-1.57.0-spirit-unused_typedef.patch
 # https://svn.boost.org/trac/boost/ticket/8878
 Patch45: boost-1.54.0-locale-unused_typedef.patch
 
-# https://svn.boost.org/trac/boost/ticket/8888
-Patch49: boost-1.54.0-python-unused_typedef.patch
-
 # https://svn.boost.org/trac/boost/ticket/9038
 Patch51: boost-1.58.0-pool-test_linking.patch
 
@@ -121,19 +118,11 @@ Patch63: boost-1.55.0-python-test-PyImport_AppendInittab.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1190039
 Patch65: boost-1.57.0-build-optflags.patch
 
-# https://svn.boost.org/trac/boost/ticket/10510
-Patch66: boost-1.57.0-uuid-comparison.patch
-
-# https://svn.boost.org/trac/boost/ticket/11283
-Patch67: boost-1.58.0-variant-includes.patch
-
 # Prevent gcc.jam from setting -m32 or -m64.
 Patch68: boost-1.58.0-address-model.patch
 
-# https://github.com/boostorg/ublas/pull/25
-Patch69: boost-1.58-ublas-inlines.patch
-
-Patch70: 0001-Changes-required-for-aarch64-support-in-boost-config.patch
+# https://svn.boost.org/trac/boost/ticket/11549
+Patch70: boost-1.59.0-log.patch
 
 %bcond_with tests
 %bcond_with docs_generated
@@ -206,7 +195,7 @@ Group: System Environment/Libraries
 
 %description date-time
 
-Run-Time support for Boost Date Time, set of date-time libraries based
+Run-Time support for Boost Date Time, a set of date-time libraries based
 on generic programming concepts.
 
 %package filesystem
@@ -268,7 +257,7 @@ Group: System Environment/Libraries
 
 %description math
 
-Run-Time support for C99 and C++ TR1 C-style Functions from math
+Run-Time support for C99 and C++ TR1 C-style Functions from the math
 portion of Boost.TR1.
 
 %package program-options
@@ -279,7 +268,7 @@ Group: System Environment/Libraries
 
 Run-Time support of boost program options library, which allows program
 developers to obtain (name, value) pairs from the user, via
-conventional methods such as command line and configuration file.
+conventional methods such as command-line and configuration file.
 
 %package python
 Summary: Run-Time component of boost python library
@@ -288,7 +277,7 @@ Group: System Environment/Libraries
 %description python
 
 The Boost Python Library is a framework for interfacing Python and
-C++. It allows you to quickly and seamlessly expose C++ classes
+C++. It allows you to quickly and seamlessly expose C++ classes,
 functions and objects to Python, and vice versa, using no special
 tools -- just your C++ compiler.  This package contains run-time
 support for Boost Python Library.
@@ -302,7 +291,7 @@ Group: System Environment/Libraries
 %description python3
 
 The Boost Python Library is a framework for interfacing Python and
-C++. It allows you to quickly and seamlessly expose C++ classes
+C++. It allows you to quickly and seamlessly expose C++ classes,
 functions and objects to Python, and vice versa, using no special
 tools -- just your C++ compiler.  This package contains run-time
 support for Boost Python Library compiled for Python 3.
@@ -358,8 +347,7 @@ Group: System Environment/Libraries
 %description system
 
 Run-Time component of Boost operating system support library, including
-the diagnostics support that will be part of the C++0x standard
-library.
+the diagnostics support that is part of the C++11 standard library.
 
 %package test
 Summary: Run-Time component of boost test library
@@ -623,17 +611,13 @@ a number of significant features and is now developed independently
 %patch25 -p1
 %patch36 -p1
 %patch45 -p1
-%patch49 -p1
 %patch51 -p1
 %patch61 -p1
 %patch62 -p1
 %patch63 -p1
 %patch65 -p1
-%patch66 -p2
-%patch67 -p2
 %patch68 -p1
-%patch69 -p2
-%patch70 -p1
+%patch70 -p2
 
 # At least python2_version needs to be a macro so that it's visible in
 # %%install as well.
@@ -652,7 +636,8 @@ a number of significant features and is now developed independently
 
 # There are many strict aliasing warnings, and it's not feasible to go
 # through them all at this time.
-export RPM_OPT_FLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing"
+# There are also lots of noisy but harmless unused local typedef warnings.
+export RPM_OPT_FLAGS="$RPM_OPT_FLAGS -fno-strict-aliasing -Wno-unused-local-typedefs"
 
 cat > ./tools/build/src/user-config.jam << "EOF"
 import os ;
@@ -663,8 +648,7 @@ using gcc : : : <compileflags>$(RPM_OPT_FLAGS) ;
 using mpi ;
 %endif
 %if %{with python3}
-# This _adds_ extra python version.  It doesn't replace whatever
-# python 2.X is default on the system.
+using python : %{python2_version} : /usr/bin/python2 : /usr/include/python%{python2_version} : : : : ;
 using python : %{python3_version} : /usr/bin/python3 : /usr/include/python%{python3_version}%{python3_abiflags} : : : : %{python3_abiflags} ;
 %endif
 EOF
@@ -837,7 +821,7 @@ echo ============================= install Boost.QuickBook ==================
 
 # Install documentation files (HTML pages) within the temporary place
 echo ============================= install documentation ==================
-# Prepare the place to temporary store the generated documentation
+# Prepare the place to temporarily store the generated documentation
 rm -rf %{boost_docdir} && %{__mkdir_p} %{boost_docdir}/html
 DOCPATH=%{boost_docdir}
 DOCREGEX='.*\.\(html?\|css\|png\|gif\)'
@@ -850,8 +834,8 @@ sed "s:^:$DOCPATH/:" tmp-doc-directories \
     | xargs -P 0 --no-run-if-empty %{__install} -d
 
 cat tmp-doc-directories | while read tobeinstalleddocdir; do
-    find $tobeinstalleddocdir -mindepth 1 -maxdepth 1 -regex $DOCREGEX \
-    | xargs -P 0 %{__install} -p -m 644 -t $DOCPATH/$tobeinstalleddocdir
+    find $tobeinstalleddocdir -mindepth 1 -maxdepth 1 -regex $DOCREGEX -print0 \
+    | xargs -P 0 -0 %{__install} -p -m 644 -t $DOCPATH/$tobeinstalleddocdir
 done
 rm -f tmp-doc-directories
 %{__install} -p -m 644 -t $DOCPATH LICENSE_1_0.txt index.htm index.html boost.png rst.css boost.css
@@ -870,7 +854,7 @@ do
   rm -f libs/${tmp_doc_file}.iso8859
 done
 
-# Prepare the place to temporary store the examples
+# Prepare the place to temporarily store the examples
 rm -rf %{boost_examplesdir} && mkdir -p %{boost_examplesdir}/html
 EXAMPLESPATH=%{boost_examplesdir}
 find libs -type d -name example -exec find {} -type f \; \
@@ -1295,6 +1279,9 @@ fi
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Wed Aug 26 2015 Jonathan Wakely <jwakely@redhat.com> 1.59.0-1
+- Rebase to 1.59.0
+
 * Tue Aug 25 2015 Jonathan Wakely <jwakely@redhat.com> 1.58.0-9
 - Add boost-doctools subpackage (#1244268).
 
