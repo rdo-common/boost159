@@ -1243,7 +1243,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Mon Aug 24 2015 Jonathan Wakely <jwakely@redhat.com> 1.58.0-8
-- Use %license for license files.
+- Use %%license for license files.
 
 * Fri Aug 21 2015 Jonathan Wakely <jwakely@redhat.com> 1.58.0-7
 - Bump release to match F23 update.
