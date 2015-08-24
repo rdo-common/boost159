@@ -32,7 +32,7 @@ Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.58.0
 %define version_enc 1_58_0
-Release: 7%{?dist}
+Release: 8%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -980,71 +980,71 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 
 %files atomic
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_atomic.so.%{sonamever}
 
 %files chrono
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_chrono.so.%{sonamever}
 
 %files container
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_container.so.%{sonamever}
 
 %if %{with context}
 
 %files context
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_context.so.%{sonamever}
 
 %files coroutine
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_coroutine.so.%{sonamever}
 
 %endif
 
 %files date-time
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_date_time.so.%{sonamever}
 
 %files filesystem
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_filesystem.so.%{sonamever}
 
 %files graph
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_graph.so.%{sonamever}
 
 %files iostreams
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_iostreams.so.%{sonamever}
 
 %files locale
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_locale.so.%{sonamever}
 
 %files log
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_log.so.%{sonamever}
 %{_libdir}/libboost_log_setup.so.%{sonamever}
 
 %files math
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_math_c99.so.%{sonamever}
 %{_libdir}/libboost_math_c99f.so.%{sonamever}
 %{_libdir}/libboost_math_c99l.so.%{sonamever}
@@ -1054,71 +1054,71 @@ rm -rf $RPM_BUILD_ROOT
 
 %files test
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_prg_exec_monitor.so.%{sonamever}
 %{_libdir}/libboost_unit_test_framework.so.%{sonamever}
 
 %files program-options
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_program_options.so.%{sonamever}
 
 %files python
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_python.so.%{sonamever}
 
 %if %{with python3}
 %files python3
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_python3.so.%{sonamever}
 
 %files python3-devel
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_python3.so
 %endif
 
 %files random
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_random.so.%{sonamever}
 
 %files regex
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_regex.so.%{sonamever}
 
 %files serialization
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_serialization.so.%{sonamever}
 %{_libdir}/libboost_wserialization.so.%{sonamever}
 
 %files signals
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_signals.so.%{sonamever}
 
 %files system
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_system.so.%{sonamever}
 
 %files thread
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_thread.so.%{sonamever}
 
 %files timer
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_timer.so.%{sonamever}
 
 %files wave
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/libboost_wave.so.%{sonamever}
 
 %files doc
@@ -1131,7 +1131,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_includedir}/%{name}
 %{_libdir}/libboost_atomic.so
 %{_libdir}/libboost_chrono.so
@@ -1169,7 +1169,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files static
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/*.a
 %if %{with mpich}
 %{_libdir}/mpich/lib/*.a
@@ -1183,23 +1183,23 @@ rm -rf $RPM_BUILD_ROOT
 
 %files openmpi
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/openmpi/lib/libboost_mpi.so.%{sonamever}
 
 %files openmpi-devel
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/openmpi/lib/libboost_*.so
 
 %files openmpi-python
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/openmpi/lib/libboost_mpi_python.so.%{sonamever}
 %{_libdir}/openmpi/lib/mpi.so
 
 %files graph-openmpi
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/openmpi/lib/libboost_graph_parallel.so.%{sonamever}
 
 %endif
@@ -1209,39 +1209,42 @@ rm -rf $RPM_BUILD_ROOT
 
 %files mpich
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/mpich/lib/libboost_mpi.so.%{sonamever}
 
 %files mpich-devel
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/mpich/lib/libboost_*.so
 
 %files mpich-python
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/mpich/lib/libboost_mpi_python.so.%{sonamever}
 %{_libdir}/mpich/lib/mpi.so
 
 %files graph-mpich
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_libdir}/mpich/lib/libboost_graph_parallel.so.%{sonamever}
 
 %endif
 
 %files build
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_datadir}/boost-build/
 
 %files jam
 %defattr(-, root, root, -)
-%doc LICENSE_1_0.txt
+%license LICENSE_1_0.txt
 %{_bindir}/bjam
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Mon Aug 24 2015 Jonathan Wakely <jwakely@redhat.com> 1.58.0-8
+- Use %license for license files.
+
 * Fri Aug 21 2015 Jonathan Wakely <jwakely@redhat.com> 1.58.0-7
 - Bump release to match F23 update.
 
