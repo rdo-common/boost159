@@ -32,7 +32,7 @@ Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.58.0
 %define version_enc 1_58_0
-Release: 8%{?dist}
+Release: 9%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -595,6 +595,16 @@ creating static and shared libraries, making pieces of executable, and other
 chores -- whether you're using GCC, MSVC, or a dozen more supported
 C++ compilers -- on Windows, OSX, Linux and commercial UNIX systems.
 
+%package doctools
+Summary: Tools for working with Boost documentation
+Group: Applications/Publishing
+Requires: docbook-dtds
+Requires: docbook-style-xsl
+
+%description doctools
+
+Tools for working with Boost documentation in BoostBook or QuickBook format.
+
 %package jam
 Summary: A low-level build tool
 Group: Development/Tools
@@ -812,6 +822,19 @@ echo ============================= install Boost.Build ==================
  %{__install} -p -m 644 v2/doc/bjam.1 -D $RPM_BUILD_ROOT%{_mandir}/man1/bjam.1
 )
 
+echo ============================= install Boost.QuickBook ==================
+(cd tools/quickbook
+ ../build/b2 --prefix=$RPM_BUILD_ROOT%{_prefix}
+ %{__install} -p -m 755 ../../dist/bin/quickbook $RPM_BUILD_ROOT%{_bindir}/
+ cd ../boostbook
+ find dtd -type f -name '*.dtd' | while read tobeinstalledfiles; do
+   install -p -m 644 $tobeinstalledfiles -D $RPM_BUILD_ROOT%{_datadir}/boostbook/$tobeinstalledfiles
+ done
+ find xsl -type f | while read tobeinstalledfiles; do
+   install -p -m 644 $tobeinstalledfiles -D $RPM_BUILD_ROOT%{_datadir}/boostbook/$tobeinstalledfiles
+ done
+)
+
 # Install documentation files (HTML pages) within the temporary place
 echo ============================= install documentation ==================
 # Prepare the place to temporary store the generated documentation
@@ -976,6 +999,30 @@ rm -rf $RPM_BUILD_ROOT
 
 %postun wave -p /sbin/ldconfig
 
+%post doctools
+CATALOG=%{_sysconfdir}/xml/catalog
+%{_bindir}/xmlcatalog --noout --add "rewriteSystem" \
+ "http://www.boost.org/tools/boostbook/dtd" \
+ "file://%{_datadir}/boostbook/dtd" $CATALOG
+%{_bindir}/xmlcatalog --noout --add "rewriteURI" \
+ "http://www.boost.org/tools/boostbook/dtd" \
+ "file://%{_datadir}/boostbook/dtd" $CATALOG
+%{_bindir}/xmlcatalog --noout --add "rewriteSystem" \
+ "http://www.boost.org/tools/boostbook/xsl" \
+ "file://%{_datadir}/boostbook/xsl" $CATALOG
+%{_bindir}/xmlcatalog --noout --add "rewriteURI" \
+ "http://www.boost.org/tools/boostbook/xsl" \
+ "file://%{_datadir}/boostbook/xsl" $CATALOG
+
+%postun doctools
+# remove entries only on removal of package
+if [ "$1" = 0 ]; then
+  CATALOG=%{_sysconfdir}/xml/catalog
+  %{_bindir}/xmlcatalog --noout --del \
+    "file://%{_datadir}/boostbook/dtd" $CATALOG
+  %{_bindir}/xmlcatalog --noout --del \
+    "file://%{_datadir}/boostbook/xsl" $CATALOG
+fi
 
 
 %files
@@ -1235,6 +1282,12 @@ rm -rf $RPM_BUILD_ROOT
 %license LICENSE_1_0.txt
 %{_datadir}/boost-build/
 
+%files doctools
+%defattr(-, root, root, -)
+%license LICENSE_1_0.txt
+%{_bindir}/quickbook
+%{_datadir}/boostbook/
+
 %files jam
 %defattr(-, root, root, -)
 %license LICENSE_1_0.txt
@@ -1242,6 +1295,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Tue Aug 25 2015 Jonathan Wakely <jwakely@redhat.com> 1.58.0-9
+- Add boost-doctools subpackage (#1244268).
+
 * Mon Aug 24 2015 Jonathan Wakely <jwakely@redhat.com> 1.58.0-8
 - Use %%license for license files.
 
