@@ -32,7 +32,7 @@ Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.59.0
 %define version_enc 1_59_0
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -123,6 +123,9 @@ Patch68: boost-1.58.0-address-model.patch
 
 # https://svn.boost.org/trac/boost/ticket/11549
 Patch70: boost-1.59.0-log.patch
+
+# https://github.com/boostorg/python/pull/40
+Patch80: boost-1.59-python-make_setter.patch
 
 %bcond_with tests
 %bcond_with docs_generated
@@ -618,6 +621,7 @@ a number of significant features and is now developed independently
 %patch65 -p1
 %patch68 -p1
 %patch70 -p2
+%patch80 -p2
 
 # At least python2_version needs to be a macro so that it's visible in
 # %%install as well.
@@ -1279,6 +1283,9 @@ fi
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Wed Sep 02 2015 Jonathan Wakely <jwakely@redhat.com> 1.59.0-2
+- Add patch for Boost.Python bug.
+
 * Wed Aug 26 2015 Jonathan Wakely <jwakely@redhat.com> 1.59.0-1
 - Rebase to 1.59.0
 
