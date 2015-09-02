@@ -32,7 +32,7 @@ Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.59.0
 %define version_enc 1_59_0
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -1283,6 +1283,9 @@ fi
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Wed Sep 02 2015 Jonathan Wakely <jwakely@redhat.com> - 1.59.0-3
+- Rebuilt for Boost 1.59
+
 * Wed Sep 02 2015 Jonathan Wakely <jwakely@redhat.com> 1.59.0-2
 - Add patch for Boost.Python bug.
 
