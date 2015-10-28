@@ -32,7 +32,7 @@ Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.59.0
 %define version_enc 1_59_0
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -1287,6 +1287,9 @@ fi
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Wed Oct 28 2015 David Tardon <dtardon@redhat.com> - 1.59.0-6
+- rebuild for ICU 56.1
+
 * Tue Sep 15 2015 Orion Poplawski <orion@cora.nwra.com> - 1.59.0-5
 - Rebuild for openmpi 1.10.0
 
