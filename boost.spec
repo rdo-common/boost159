@@ -32,7 +32,7 @@ Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.59.0
 %define version_enc 1_59_0
-Release: 7%{?dist}
+Release: 8%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -679,7 +679,7 @@ echo ============================= build serial ==================
 ./b2 -d+2 -q %{?_smp_mflags} \
 	--without-mpi --without-graph_parallel --build-dir=serial \
 %if !%{with context}
-	--without-context --without-coroutine \
+	--without-context --without-coroutine --without-coroutine2 \
 %endif
 	variant=release threading=multi debug-symbols=on pch=off \
 	python=%{python2_version} stage
@@ -785,7 +785,7 @@ echo ============================= install serial ==================
 ./b2 -d+2 -q %{?_smp_mflags} \
 	--without-mpi --without-graph_parallel --build-dir=serial \
 %if !%{with context}
-	--without-context --without-coroutine \
+	--without-context --without-coroutine --without-coroutine2 \
 %endif
 	--prefix=$RPM_BUILD_ROOT%{_prefix} \
 	--libdir=$RPM_BUILD_ROOT%{_libdir} \
@@ -1287,6 +1287,9 @@ fi
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Fri Nov 13 2015 Dan Horák <dan[at]danny.cz> - 1.59.0-8
+- disable also the coroutine2 module when context is not available
+
 * Wed Nov 11 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.59.0-7
 - Rebuilt for https://fedoraproject.org/wiki/Changes/python3.5
 
