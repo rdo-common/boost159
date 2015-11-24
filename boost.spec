@@ -32,7 +32,7 @@ Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.59.0
 %define version_enc 1_59_0
-Release: 8%{?dist}
+Release: 9%{?dist}
 License: Boost and MIT and Python
 
 %define toplev_dirname %{name}_%{version_enc}
@@ -77,14 +77,14 @@ Requires: boost-timer%{?_isa} = %{version}-%{release}
 Requires: boost-wave%{?_isa} = %{version}-%{release}
 
 BuildRequires: m4
-BuildRequires: libstdc++-devel%{?_isa}
-BuildRequires: bzip2-devel%{?_isa}
-BuildRequires: zlib-devel%{?_isa}
-BuildRequires: python-devel%{?_isa}
+BuildRequires: libstdc++-devel
+BuildRequires: bzip2-devel
+BuildRequires: zlib-devel
+BuildRequires: python-devel
 %if %{with python3}
-BuildRequires: python3-devel%{?_isa}
+BuildRequires: python3-devel
 %endif
-BuildRequires: libicu-devel%{?_isa}
+BuildRequires: libicu-devel
 
 # https://svn.boost.org/trac/boost/ticket/6150
 Patch4: boost-1.50.0-fix-non-utf8-files.patch
@@ -1287,6 +1287,9 @@ fi
 %{_mandir}/man1/bjam.1*
 
 %changelog
+* Tue Nov 24 2015 Jonathan Wakely <jwakely@redhat.com> 1.59.0-9
+- do not use arch-specific BuildRequires (#225622)
+
 * Fri Nov 13 2015 Dan Horák <dan[at]danny.cz> - 1.59.0-8
 - disable also the coroutine2 module when context is not available
 
